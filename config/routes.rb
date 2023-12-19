@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'accomodations/index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -7,4 +8,14 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  root to: "accomodationss#index"
+
+  resources :accomodations, except: [:edit, :update] do
+    resources :bookings, only: [:new, :create]
+    resources :reviews, only: [:new, :create]
+  end
+
+  resources :bookings, only: :destroy
+  resources :reviews, only: :destroy
 end
